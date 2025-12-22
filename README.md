@@ -59,3 +59,43 @@ plily58.conf
 lily58.keymap
 ```
 
+## Initial setup
+
+source: [initial setup](https://zmk.dev/docs/user-setup)
+
+1. Install pipx - python package manager
+
+```sh
+brew install pipx
+pipx ensurepath
+```
+
+2. Install zmk - tool for creating keyboards
+
+```sh
+pipx install zmk
+```
+
+3. Init repository
+
+```sh
+zmk init
+```
+
+4. or setup with existing repo
+
+```sh
+zmk config user.home "/path/to/zmk-config"
+```
+
+5. Add a keyboard
+
+```sh
+zmk keyboard add
+```
+
+6. Adjust a .conf nd .keymap file
+
+7. commit and push changes
+
+8. Download github actions artifact and flash
