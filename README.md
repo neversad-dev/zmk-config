@@ -56,9 +56,9 @@ include:
     shield: corne_left
   - board: nice_nano
     shield: corne_right
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: lily58_left
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: lily58_right
 ```
 
