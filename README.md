@@ -1,101 +1,82 @@
-# Corne ZMK config
+# nevercorne — Corne ZMK config
 
-Corne LP is a low profile split 40% keyboard
+[![Build](https://github.com/neversad-dev/zmk-config/actions/workflows/build.yml/badge.svg)](https://github.com/neversad-dev/zmk-config/actions/workflows/build.yml)
+[![Release](https://github.com/neversad-dev/zmk-config/actions/workflows/release.yml/badge.svg)](https://github.com/neversad-dev/zmk-config/actions/workflows/release.yml)
+[![ZMK v0.3.0](https://img.shields.io/badge/ZMK-v0.3.0-blue)](https://github.com/zmkfirmware/zmk)
 
-## My Corne Cherry v3 setup
+ZMK-based firmware for a **Corne LP** (low-profile split 40% keyboard). Built with [ZMK](https://zmk.dev/).
 
-- ✅	[Corne LP V3 PCB Black](https://www.boardsource.xyz/products/Corne_LP)
-- ✅	[nice!nano v2.0](https://nicekeyboards.com/docs/nice-nano/)
-- ✅	[Choc Hot Swap Sockets](https://www.boardsource.xyz/products/Choc_Hot_Swap_Sockets)
-- ✅	[Choc Purpz switches](https://www.boardsource.xyz/store/5ef6f7376786dc1e65a80744)
-- ✅	[Choc Robin switches](https://www.amazon.com/Profile-Mechanical-Switch-Keyboard-Switches/dp/B0CKGLZ3BW)
-- ✅	[MBK blanks keycaps](https://www.boardsource.xyz/products/MBK_blanks)
-- ✅	Space Grey Aluminum Corne LP Case
+---
 
+## Hardware (Corne Cherry v3)
 
-## Tool
+| Component | Link |
+|-----------|------|
+| Corne LP V3 PCB Black | [boardsource](https://www.boardsource.xyz/products/Corne_LP) |
+| nice!nano v2.0 | [Nice Keyboards](https://nicekeyboards.com/docs/nice-nano/) |
+| Choc Hot Swap Sockets | [boardsource](https://www.boardsource.xyz/products/Choc_Hot_Swap_Sockets) |
+| Choc Purpz / Choc Robin switches | [boardsource](https://www.boardsource.xyz/store/5ef6f7376786dc1e65a80744) / [Amazon](https://www.amazon.com/Profile-Mechanical-Switch-Keyboard-Switches/dp/B0CKGLZ3BW) |
+| MBK blanks keycaps | [boardsource](https://www.boardsource.xyz/products/MBK_blanks) |
+| Case | Space Grey Aluminum Corne LP Case |
 
-- [ZMK](https://zmk.dev/)
-- [Keymap editor web](https://nickcoutsos.github.io/keymap-editor/)
-- [keymap-drawer web](https://keymap-drawer.streamlit.app/)
+---
 
-## Build firmware
+## Build & release
 
-GitHub Actions is used to automatically build the user's configured firmware for them.
+- **CI builds** (on every push/PR): [Actions](https://github.com/neversad-dev/zmk-config/actions) → select a run → **Artifacts** → download the firmware.
+- **Releases** (on version tags): Push a tag (e.g. `v0.0.2` or `v1.0.0+zmk0.3.0`) to trigger the release workflow. Firmware is attached to the [Releases](https://github.com/neversad-dev/zmk-config/releases) page.
 
-1. Push the changes to repository
-2. Go to [Actions](https://github.com/GiveNoCode/zmk-config/actions) 
-3. Wait for build completion
-4. Download artifacts -> firmware.zip
+Build matrix is defined in **`build.yaml`** (Corne left/right + settings_reset for nice!nano).
 
+---
 
 ## Flash firmware
 
-1. Enter bootloader (double tap reset)
-2. Copy .uf2 firmware (for each half) file to "NICENANO" root folder
+1. Put the board in bootloader mode (double-tap reset).
+2. Copy the `.uf2` file for each half to the **NICENANO** drive.
 
-## Building Additional Keyboards
+---
 
-You can build additional keyboards with GitHub actions by appending them to `build.yml` in your `zmk-config` folder. For instance assume that we have set up a Corne shield with nice!nano during [initial setup](https://zmk.dev/docs/user-setup) and we want to add a Lily58 shield with nice!nano v2. The following is an example `build.yaml` file that would accomplish that:
+## Tools
 
+- [ZMK](https://zmk.dev/) — firmware
+- [Keymap editor](https://nickcoutsos.github.io/keymap-editor/) — visualize/edit keymaps
+- [keymap-drawer](https://keymap-drawer.streamlit.app/) — draw keymap diagrams
+
+---
+
+## Adding more keyboards
+
+Edit **`build.yaml`** and add entries under `include`. Example for Corne + Lily58:
+
+```yaml
+include:
+  - board: nice_nano
+    shield: corne_left
+  - board: nice_nano
+    shield: corne_right
+  - board: nice_nano_v2
+    shield: lily58_left
+  - board: nice_nano_v2
+    shield: lily58_right
 ```
-include:  
-	- board: nice_nano    
-	  shield: corne_left  
-	- board: nice_nano    
-	  shield: corne_right  
-	- board: nice_nano_v2   
-	  shield: lily58_left  
-	- board: nice_nano_v2    
-	  shield: lily58_right
-```
 
-In addition to updating `build.yaml`, Lily58's shield files should also be added into the `config` sub-folder inside `zmk-config` together with your Corne files, e.g.:
+Add the shield config and keymap files (e.g. `lily58.conf`, `lily58.keymap`) under **`config/`**. See [ZMK user setup](https://zmk.dev/docs/user-setup) and the comments in `build.yaml` for options like `artifact-name`, `snippet`, and `cmake-args`.
 
-```
-corne.conf
-corne.keyma
-plily58.conf
-lily58.keymap
-```
+---
 
-## Initial setup
+## Local setup (optional)
 
-source: [initial setup](https://zmk.dev/docs/user-setup)
-
-1. Install pipx - python package manager
+To build or develop locally with [ZMK tooling](https://zmk.dev/docs/user-setup):
 
 ```sh
-brew install pipx
-pipx ensurepath
-```
-
-2. Install zmk - tool for creating keyboards
-
-```sh
+# Install pipx and ZMK CLI
+brew install pipx && pipx ensurepath
 pipx install zmk
-```
 
-3. Init repository
-
-```sh
-zmk init
-```
-
-4. or setup with existing repo
-
-```sh
-zmk config user.home "/path/to/zmk-config"
-```
-
-5. Add a keyboard
-
-```sh
+# Point ZMK at this repo and add keyboards
+zmk config user.home "$(pwd)"
 zmk keyboard add
 ```
 
-6. Adjust a .conf nd .keymap file
-
-7. commit and push changes
-
-8. Download github actions artifact and flash
+Edit `config/*.conf` and `config/*.keymap`, then commit and push; CI will build, or download artifacts from [Actions](https://github.com/neversad-dev/zmk-config/actions).
