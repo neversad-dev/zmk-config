@@ -3,6 +3,7 @@
 [![Build](https://github.com/neversad-dev/zmk-config/actions/workflows/build.yml/badge.svg)](https://github.com/neversad-dev/zmk-config/actions/workflows/build.yml)
 [![Release](https://github.com/neversad-dev/zmk-config/actions/workflows/release.yml/badge.svg)](https://github.com/neversad-dev/zmk-config/actions/workflows/release.yml)
 [![ZMK v0.3.0](https://img.shields.io/badge/ZMK-v0.3.0-blue)](https://github.com/zmkfirmware/zmk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ZMK-based firmware for a **Corne LP** (low-profile split 40% keyboard). Built with [ZMK](https://zmk.dev/).
 
@@ -80,3 +81,9 @@ zmk keyboard add
 ```
 
 Edit `config/*.conf` and `config/*.keymap`, then commit and push; CI will build, or download artifacts from [Actions](https://github.com/neversad-dev/zmk-config/actions).
+
+---
+
+## License
+
+[MIT](LICENSE) — feel free to use and adapt this config.
